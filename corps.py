@@ -11,7 +11,7 @@ class Corps(object) :
     """
 
     def __init__(self, x, y, r, m) :
-        """Initialisation d'un corps"""
+        """Instanciation d'un corps"""
 
         self.x = x
         self.y = y
@@ -34,3 +34,8 @@ class Corps(object) :
         chaine += chaine_m
 
         return chaine
+
+    def vect(self, corps) :
+        """Vecteur allant de self à corps"""
+
+        return (corps.x - self.x, corps.y - self.y)
