@@ -5,12 +5,17 @@
 Fichier de classe des objets célestes
 """
 
-class Corps(object) :
+def norme (v) :
+    """Renvoie la norme du vecteur v"""
+
+    return (v[0]**2+v[1]**2)**.5
+
+class Corps (object) :
     """
     Classe de représentation des objets célestes
     """
 
-    def __init__(self, x, y, vx, vy, r, m, name = "Corps") :
+    def __init__ (self, name, x, y, vx, vy, r, m) :
         """Instanciation d'un corps"""
 
         self.name = name
@@ -21,16 +26,16 @@ class Corps(object) :
         self.r = r
         self.m = m
 
-    def __str__(self) :
-        """Surcharge de l'opérateur str() pour le classe Corps"""
+    def __str__ (self) :
+        """Surcharge de l'opérateur str() pour la classe Corps"""
 
-        chaine_name = "Ce corps s'appelle %s" % self.name
-        chaine_x = "La coordonnée x du corps est : " + str(self.x)
-        chaine_y = "La coordonnée y du corps est : " + str(self.y)
-        chaine_vx = "La composante x de la vitesse du corps est : " + str(self.vx) + " m.s⁻¹"
-        chaine_vy = "La composante y de la vitesse du corps est : " + str(self.vy) + " m.s⁻¹"
-        chaine_r = "Le rayon du corps est : " + str(self.r) + " m"
-        chaine_m = "La masse du corps est : " + str(self.m) + " kg"
+        chaine_name = "Corps : %s" % self.name
+        chaine_x = "x : " + str(self.x)
+        chaine_y = "y : " + str(self.y)
+        chaine_vx = "vx : " + str(self.vx) + " m.s⁻¹"
+        chaine_vy = "vy : " + str(self.vy) + " m.s⁻¹"
+        chaine_r = "r : " + str(self.r) + " m"
+        chaine_m = "m : " + str(self.m) + " kg"
 
         chaine = ""
 
@@ -41,7 +46,16 @@ class Corps(object) :
 
         return chaine
 
-    def vect(self, corps) :
+    def vect (self, corps) :
         """Vecteur allant de self à corps"""
 
         return (corps.x - self.x, corps.y - self.y)
+
+    def force (self, corps, k) :
+        """Force exercée par self sur corps"""
+
+        corps_k = self.vect(corps)
+
+        g = k * self.m * corps.m / norme(corps_k)**3
+
+        return (g * corps_k[0], g * corps_k[1])
