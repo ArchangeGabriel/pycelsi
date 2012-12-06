@@ -3,15 +3,34 @@ import matplotlib.animation as animation
 
 #on cree la figure qui sera affichee.
 fig = pyplot.figure()
-ax = fig.add_subplot(111, aspect = 'equal', autoscale_on = autoscale) #je me demande s'il faudrait rajouter des xlim et ylim. Essayons d'abord sans.
+ax = fig.add_subplot(111, aspect = 'equal', autoscale_on = False, xlim=2000, ylim=2000) #je me demande s'il faudrait rajouter des xlim et ylim. Essayons d'abord sans.
 
 univers, = ax.plot([], [], 'bo', ms=5) #On affiche un systeme vide qui sera modifie par les fonctions ulterieures au cours de l'animation. En fait on cree ici notre univers visuel.
 energie_texte = ax.text(0.02, 0.90, '', transform=ax.transAxes) #voici le texte qui affichera l'energie du systeme et qui sera mis a jour a chaque frame. Si le nombre affiche bouge, nous sommes dans de beaux draps (conservation de l'energie du systeme en theorie).
 
+class corps(object):
+	def energie(self):
+		return 1
+	def avancer(self, dt):
+		if self.x <= 2000:
+			self.x += 1
+		else:
+			self.x += -1
+		if self.y <= 2000:
+			self.y += 1
+		else:
+			self.y += -1
+	def position(self):
+		return [[self.x,self.y],[self.x+1,self.y+1]]
+
+dt=1/30	
+systeme=corps()
+systeme.x=0
+systeme.y=0
 
 def initialisation():
 	"""
-	Donne les prarmetres de départ de l'animation.
+	Donne les prarmetres de depart de l'animation.
 	"""
 	univers.set_data([], []) #on initialise le systeme avec... rien. Une etape necessaire a l'animation
 	energie_texte.set_text('') #on initialise l'affichage l'energie avec rien. Necessaire a l'animation
@@ -22,11 +41,11 @@ def animer(i):
 	"""
 	Genere l'animation de la frame i en actualisant les positions de la frame i-1.
 	"""
-	global systeme, dt #on recupere le systeme et la duree entre deux frames
-    systeme.avancer(dt) #on actualise les positions du systeme
+	#global systeme, dt #on recupere le systeme et la duree entre deux frames
+	systeme.avancer(dt) #on actualise les positions du systeme
 
-    univers.set_data(*systeme.position()) #on actualise les positions dans les donnees a afficher. L'etoile specifie a la methode qu'on utilise un argument qui a un nom. Sinon elle crie.
-    energie_texte.set_text('energie = %.3f J' % systeme.energie()) #on affiche la nouvelle energie. J'ai pense que 3 chiffres significatifs suffisaient mais si tu veux en rajouter, fais-toi plaisir.
+	univers.set_data(*systeme.position()) #on actualise les positions dans les donnees a afficher. L'etoile specifie a la methode qu'on utilise un argument qui a un nom. Sinon elle crie.
+	energie_texte.set_text('energie = %.3f J' % systeme.energie()) #on affiche la nouvelle energie. J'ai pense que 3 chiffres significatifs suffisaient mais si tu veux en rajouter, fais-toi plaisir.
 
 	return univers, energie_texte
 
@@ -40,6 +59,8 @@ intervalle = 1000 * dt - (t1 - t0) #ai pas compris ca. A examiner de plus pres. 
 
 if __name__=="__main__": #partie a utiliser pour les test
 
-anim = animation.FuncAnimation (fig, animer, frame=300, interval=intervalle, blit=True, init_func=initialisation())
 
-pyplot.show()
+
+	anim = animation.FuncAnimation (fig, animer, frames=300, interval=intervalle, blit=True, init_func=initialisation)
+
+	pyplot.show()
