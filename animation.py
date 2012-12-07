@@ -1,65 +1,72 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+"""
+Fichier en charge de l'affichage et de l'animation du système
+"""
+
 import matplotlib.pyplot as pyplot
 import matplotlib.animation as animation
+#from corps import *
+#from systeme import *
+import numpy
 
-#on cree la figure qui sera affichee.
+#création de la figure qui sera affichée - à passer dans le main
 fig = pyplot.figure()
-ax = fig.add_subplot(111, aspect = 'equal', autoscale_on = False, xlim=2000, ylim=2000) #je me demande s'il faudrait rajouter des xlim et ylim. Essayons d'abord sans.
+ax = fig.add_subplot(111, aspect = 'equal', autoscale_on = False, xlim=[-2.1,1.1], ylim=[-2.1,1.1])
 
-univers, = ax.plot([], [], 'bo', ms=5) #On affiche un systeme vide qui sera modifie par les fonctions ulterieures au cours de l'animation. En fait on cree ici notre univers visuel.
-energie_texte = ax.text(0.02, 0.90, '', transform=ax.transAxes) #voici le texte qui affichera l'energie du systeme et qui sera mis a jour a chaque frame. Si le nombre affiche bouge, nous sommes dans de beaux draps (conservation de l'energie du systeme en theorie).
+#affichage d'un système vide qui sera modifié au cours de l'animation. En fait on crée ici notre univers visuel - à passer dans le main
+univers, = ax.plot([], [], 'bo', ms=5)
+energie_texte = ax.text(0.02, 0.90, '', transform=ax.transAxes)
 
+#le bloc suivant est un outil de déboggage de ce fichier
 class corps(object):
 	def energie(self):
 		return 1
-	def avancer(self, dt):
-		if self.x <= 2000:
-			self.x += 1
-		else:
-			self.x += -1
-		if self.y <= 2000:
-			self.y += 1
-		else:
-			self.y += -1
-	def position(self):
-		return [[self.x,self.y],[self.x+1,self.y+1]]
+	def iteration(self, dt):
+		global a
+		a += 0.01
+		self.x = numpy.cos(a)
+		self.y = numpy.sin(a)
+	def positions(self):
+		return [[self.x,0.5*self.x-1,0.5*self.x**5-0.5],[0.5*self.y,self.y-1,0.5*self.y**5-0.5]]
 
 dt=1/30	
 systeme=corps()
 systeme.x=0
 systeme.y=0
+a = 0.
 
 def initialisation():
 	"""
-	Donne les prarmetres de depart de l'animation.
+	Donne les prarmètres de départ de l'animation.
 	"""
-	univers.set_data([], []) #on initialise le systeme avec... rien. Une etape necessaire a l'animation
-	energie_texte.set_text('') #on initialise l'affichage l'energie avec rien. Necessaire a l'animation
+	univers.set_data([], [])
+	energie_texte.set_text('') #on initialise le système puis l'affichage l'énergie avec rien. Nécessaire à l'animation avec FuncAnimation
 	
-	return univers, energie_texte #on retourne les objets qui seront modifies par l'animation a chaque frame.
+	return univers, energie_texte #on retourne les objets qui seront modifiés par l'animation à chaque frame
 
 def animer(i):
 	"""
-	Genere l'animation de la frame i en actualisant les positions de la frame i-1.
+	Génère l'animation de la frame i en actualisant les positions de la frame i-1.
 	"""
-	#global systeme, dt #on recupere le systeme et la duree entre deux frames
-	systeme.avancer(dt) #on actualise les positions du systeme
+#	global systeme, dt #on récupère le système et la durée entre deux frames. Essayons sans les global d'abord
+	systeme.iteration(dt) #on actualise les positions du système
 
-	univers.set_data(*systeme.position()) #on actualise les positions dans les donnees a afficher. L'etoile specifie a la methode qu'on utilise un argument qui a un nom. Sinon elle crie.
-	energie_texte.set_text('energie = %.3f J' % systeme.energie()) #on affiche la nouvelle energie. J'ai pense que 3 chiffres significatifs suffisaient mais si tu veux en rajouter, fais-toi plaisir.
+	univers.set_data(*systeme.positions()) #on actualise les positions dans les données à afficher. L'étoile spécifie à la méthode qu'on utilise un argument qui a un nom. Sinon elle crie
+	energie_texte.set_text('energie = %.3f J' % systeme.energie()) #on affiche la nouvelle énergie. J'ai pensé que 3 chiffres significatifs suffisaient mais si tu veux en rajouter, fais-toi plaisir
 
 	return univers, energie_texte
 
-#on fixe ensuite l'intervalle en fonction de dt et de la duree separant deux frames. Du gros repompe de GitHub, mais on va voir comment ca se comporte.
+#on fixe ensuite l'intervalle en fonction de dt et de la durée séparant deux frames. Du gros repompé de GitHub, mais on va voir comment ça se comporte - à passer dans le main
 import time
 t0 = time.time()
 animer(0)
 t1 = time.time()
-intervalle = 1000 * dt - (t1 - t0) #ai pas compris ca. A examiner de plus pres. On peut peut-etre balancer un intervalle arbitraire pour simplifier.
+intervalle = 1000 * dt - (t1 - t0) #ai pas compris ca. À examiner de plus près. On peut peut-être balancer un intervalle arbitraire pour simplifier
 
 
-if __name__=="__main__": #partie a utiliser pour les test
-
-
+if __name__=="__main__": #partie à utiliser pour les tests
 
 	anim = animation.FuncAnimation (fig, animer, frames=300, interval=intervalle, blit=True, init_func=initialisation)
 

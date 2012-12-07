@@ -64,11 +64,12 @@ class Systeme (object) :
             self.corps[i].vy += dz[1][4*i+3]
 
     def positions (self) :
-        """Renvoit la liste des positions des corps du système"""
+        """Renvoie la liste des positions des corps du système"""
 
-        z = []
+        z = [[],[]]
 
         for corps in self.corps :
-            z += [[corps.x, corps.y]]
+            z[0] += [corps.x]
+            z[1] += [corps.y]
 
         return z
