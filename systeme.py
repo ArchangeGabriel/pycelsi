@@ -73,3 +73,8 @@ class Systeme (object) :
             z[1] += [corps.y]
 
         return z
+
+    def energie (self) :
+	"""Renvoie l'énergie du système. Doit être conservée si tout se passe bien"""
+
+	return 1 #oui c'est provisoire
