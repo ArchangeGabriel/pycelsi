@@ -51,11 +51,18 @@ class Corps (object) :
 
         return (corps.x - self.x, corps.y - self.y)
 
-    def force (self, corps, k) :
-        """Force exercée par self sur corps"""
+    def potentiel_force (self, corps, k) :
+        """Potentiel et force exercée par self sur corps"""
 
         corps_k = self.vect(corps)
 
-        g = k * self.m * corps.m / norme(corps_k)**3
+        V = k * self.m * corps.m / norme(corps_k)
 
-        return (g * corps_k[0], g * corps_k[1])
+        g = V / norme(corps_k)**2
+
+        return (V,(g * corps_k[0], g * corps_k[1]))
+
+    def energie_ki (self):
+        """Energie cinétique du corps"""
+
+        return self.m*(self.vx**2+self.vy**2)/2

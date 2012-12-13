@@ -21,6 +21,9 @@ class Systeme (object) :
 
         self.n = 0
 
+        self.E_T = 0
+        self.E_V = 0
+
         for corps in l :
             self.corps += [Corps(corps[0], corps[1], corps[2], corps[3], corps[4], corps[5], corps[6])]
             self.n += 1
@@ -37,9 +40,17 @@ class Systeme (object) :
             z[4*i+2] = z[4*i+3]
             z[4*i+3] = 0
 
+        self.E_T = 0
+        self.E_V = 0
+
+        for corps in self.corps :
+            self.E_T += corps.energie_ki()
+
         for i in range(0, self.n - 1) :
             for j in range (i + 1, self.n) :
-                f = self.corps[i].force(self.corps[j], self.G)
+                Vf = self.corps[i].potentiel_force(self.corps[j], self.G)
+                self.E_V -= Vf[0]
+                f = Vf[1]
                 z[4*i+1] += f[0] / self.corps[i].m
                 z[4*i+3] += f[1] / self.corps[i].m
                 z[4*j+1] -= f[0] / self.corps[j].m
@@ -73,8 +84,3 @@ class Systeme (object) :
             z[1] += [corps.y]
 
         return z
-
-    def energie (self) :
-	"""Renvoie l'énergie du système. Doit être conservée si tout se passe bien"""
-
-	return 1 #oui c'est provisoire

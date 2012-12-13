@@ -9,6 +9,7 @@ import matplotlib.pyplot as pyplot
 import matplotlib.animation
 from systeme import *
 from main import *
+from time import time
 
 
 #création de la figure qui sera affichée
@@ -35,10 +36,14 @@ def animer(i):
 	"""
 	Génère l'animation de la frame i en actualisant les positions et l'énergie de la frame i-1 et en envoyant le résultat dans l'"univers visuel"
 	"""
-	systeme.iteration(dt)
+
+	t0 = time()	
+
+	while time() - t0 < periode_affichage / 1000 :
+		systeme.iteration(dt)
 
 	univers.set_data(*systeme.positions()) #l'étoile spécifie à la méthode qu'on utilise un argument qui a un nom. Sinon elle crie
-	energie_texte.set_text('energie = %.3f J' % systeme.energie()) #j'ai pensé que 3 décimales suffisaient
+	energie_texte.set_text('energie = %.3e J' % (systeme.E_T+systeme.E_V)) #j'ai pensé que 3 décimales suffisaient
 
 	return univers, energie_texte
 
