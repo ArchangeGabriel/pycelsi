@@ -69,10 +69,10 @@ class Systeme (object) :
         dz = odeint(self.vect_deriv, z, [0, dt])
 
         for i in range(0, self.n) :
-            self.corps[i].x += dz[1][4*i]
-            self.corps[i].vx += dz[1][4*i+1]
-            self.corps[i].y += dz[1][4*i+2]
-            self.corps[i].vy += dz[1][4*i+3]
+            self.corps[i].x += dz[1][4*i]*dt
+            self.corps[i].vx += dz[1][4*i+1]*dt
+            self.corps[i].y += dz[1][4*i+2]*dt
+            self.corps[i].vy += dz[1][4*i+3]*dt
 
     def positions (self) :
         """Renvoie la liste des positions des corps du système"""

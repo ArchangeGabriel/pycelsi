@@ -14,7 +14,7 @@ from time import time
 
 #création de la figure qui sera affichée
 fig = pyplot.figure()
-ax = fig.add_subplot(111, aspect = 'equal', autoscale_on = False, xlim=[-1.1*UA,1.1*UA], ylim=[-1.1*UA,1.1*UA])
+ax = fig.add_subplot(111, aspect = 'equal', autoscale_on = False, xlim=[-1.5,1.5], ylim=[-1.5,1.5])
 
 
 #création d'un système vide qui sera modifié au cours de l'animation. En fait on crée ici notre "univers visuel"
@@ -37,10 +37,12 @@ def animer(i):
 	Génère l'animation de la frame i en actualisant les positions et l'énergie de la frame i-1 et en envoyant le résultat dans l'"univers visuel"
 	"""
 
-	t0 = time()	
+#	t0 = time()	
 
-	while time() - t0 < periode_affichage / 1000 :
-		systeme.iteration(dt)
+#	while time() - t0 < periode_affichage / 1000 :
+	systeme.iteration(dt)
+
+#	print systeme.positions()
 
 	univers.set_data(*systeme.positions()) #l'étoile spécifie à la méthode qu'on utilise un argument qui a un nom. Sinon elle crie
 	energie_texte.set_text('energie = %.3e J' % (systeme.E_T+systeme.E_V)) #j'ai pensé que 3 décimales suffisaient
@@ -48,12 +50,12 @@ def animer(i):
 	return univers, energie_texte
 
 
-#on peut fixer l'intervalle en fonction de dt et de la durée séparant deux frames. Du gros repompé de GitHub, mais on va voir comment ça se comporte
+#on peut fixer l'intervalle en fonction de dt et de la durée séparant deux frames, histoire d'être indépendant de la durée de l'affichage
 #from time import time
 #t0 = time()
 #animer(0)
 #t1 = time()
-#intervalle = 1000 * dt - (t1 - t0) #ai pas compris ca. À examiner de plus près. En attendant j'ai balancé un intervalle arbitraire pour simplifier
+#intervalle = 1000 * dt - (t1 - t0)
 
 
 #animation et affichage à proprement parler
