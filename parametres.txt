@@ -1,0 +1,18 @@
+#------------------------initialisation du système------------------------
+
+
+
+
+#--------------------contrôle du temps et des calculs---------------------
+
+
+#coefficient d'écoulement du temps par rapport au temps réel
+0.1
+
+
+#en s, période d'affichage d'une nouvelle image
+0.025
+
+
+#nombre de calculs par image
+5
