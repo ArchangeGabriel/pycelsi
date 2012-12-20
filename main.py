@@ -37,7 +37,7 @@ from animation import *
 dt = periode_affichage*temps_relat/calc_par_frame #on fixe la période de calcul
 
 t0 = time()
-animer(0, calc_par_frame, systeme, dt)
+animer(0, systeme, dt)
 t1 = time()
 
 assert periode_affichage - (t1 - t0) > 0, "période d'affichage demandée %f s trop faible par rapport au temps d'affichage %f s" % (periode_affichage , t1-t0) # on ne pourra pas réduire la période de refresh en-dessous du temps nécessaire à l'affichage
@@ -50,5 +50,5 @@ periode_affichage = periode_affichage - (t1 - t0) #on adapte la période d'affic
 #--------animation du système---------------------------------------------
 
 
-anim = matplotlib.animation.FuncAnimation (fig, animer, fargs=(calc_par_frame, systeme, dt), frames=300, interval=periode_affichage*1000, blit=True, init_func=initialisation)
+anim = matplotlib.animation.FuncAnimation (fig, animer, fargs=(systeme, dt), frames=300, interval=periode_affichage*1000, blit=True, init_func=initialisation)
 pyplot.show()

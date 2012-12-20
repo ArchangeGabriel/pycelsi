@@ -38,7 +38,7 @@ def initialisation():
     return univers, energie_texte
 
 
-def animer(i, calc_par_frame, systeme, dt):
+def animer(i, systeme, dt):
     """
     Génère l'animation de la frame i en actualisant les positions et l'énergie de la frame i-1 et en envoyant le résultat dans l'"univers visuel"
     """
