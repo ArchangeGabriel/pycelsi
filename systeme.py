@@ -24,6 +24,9 @@ class Systeme (object) :
         self.E_T = 0
         self.E_V = 0
 
+        self.duree_sys = 0
+        self.duree_reel = 0
+
         for corps in l :
             self.corps += [Corps(corps[0], corps[1], corps[2], corps[3], corps[4], corps[5], corps[6])]
             self.n += 1

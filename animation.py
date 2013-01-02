@@ -25,6 +25,7 @@ ax = fig.add_subplot(111, aspect = 'equal', autoscale_on = False, xlim=[-1.5,1.5
 #création d'un système vide qui sera modifié au cours de l'animation. En fait on crée ici notre "univers visuel"
 univers, = ax.plot([], [], 'bo', markersize=5)
 energie_texte = ax.text(0.02, 0.90, '', transform=ax.transAxes)
+temps_texte = ax.text(0.02, 0.90, '', transform=ax.transAxes)
 
 
 def initialisation():
@@ -33,9 +34,10 @@ def initialisation():
     """
 
     univers.set_data([], [])
-    energie_texte.set_text('')
+    energie_texte.set_text('\n\n')
+    temps_texte.set_text('\n\n')
     
-    return univers, energie_texte
+    return univers, energie_texte, temps_texte
 
 
 def animer(i, systeme, dt):
@@ -45,11 +47,15 @@ def animer(i, systeme, dt):
 
     for calc in range (0,calc_par_frame) :
         systeme.iteration(dt)
+        systeme.duree_sys += dt
+
+    systeme.duree_reel += periode_affichage
 
     univers.set_data(*systeme.positions()) #l'étoile spécifie à la méthode qu'on utilise un argument qui "a un nom"
-    energie_texte.set_text('energie = %.3e J' % (systeme.E_T+systeme.E_V)) #j'ai pensé que 3 décimales suffisaient
+    energie_texte.set_text('energie = %.3e J\n\n' % (systeme.E_T+systeme.E_V)) #j'ai pensé que 3 décimales suffisaient
+    temps_texte.set_text('temps : %.3f s  effectif : %.3f s' % (systeme.duree_sys, systeme.duree_reel))
 
-    return univers, energie_texte
+    return univers, energie_texte, temps_texte
 
 
 
