@@ -37,11 +37,13 @@ class Systeme (object) :
     def vect_deriv (self, z, t) :
         """Vecteur des relations dérivées sur x, vx, y, vy"""
 
+        dz = list()
+
         for i in range(0, self.n) :
-            z[4*i] = z[4*i+1]
-            z[4*i+1] = 0
-            z[4*i+2] = z[4*i+3]
-            z[4*i+3] = 0
+            dz.append(z[4*i+1])
+            dz.append(0)
+            dz.append(z[4*i+3])
+            dz.append(0)
 
         self.E_T = 0
         self.E_V = 0
@@ -54,12 +56,12 @@ class Systeme (object) :
                 Vf = self.corps[i].potentiel_force(self.corps[j], self.G)
                 self.E_V -= Vf[0]
                 f = Vf[1]
-                z[4*i+1] += f[0] / self.corps[i].m
-                z[4*i+3] += f[1] / self.corps[i].m
-                z[4*j+1] -= f[0] / self.corps[j].m
-                z[4*j+3] -= f[1] / self.corps[j].m
+                dz[4*i+1] += f[0] / self.corps[i].m
+                dz[4*i+3] += f[1] / self.corps[i].m
+                dz[4*j+1] -= f[0] / self.corps[j].m
+                dz[4*j+3] -= f[1] / self.corps[j].m
 
-        return z
+        return dz
 
     def iteration (self, dt) :
         """Iteration de l'état du système"""
@@ -69,13 +71,14 @@ class Systeme (object) :
         for corps in self.corps :
             z += [corps.x, corps.vx, corps.y, corps.vy]
 
-        dz = odeint(self.vect_deriv, z, [0, dt])
+        z = odeint(self.vect_deriv, z, [0, dt])[1]
 
         for i in range(0, self.n) :
-            self.corps[i].x += dz[1][4*i]*dt
-            self.corps[i].vx += dz[1][4*i+1]*dt
-            self.corps[i].y += dz[1][4*i+2]*dt
-            self.corps[i].vy += dz[1][4*i+3]*dt
+            print z[4*i], z[4*i+1], z[4*i+2], z[4*i+3]
+            self.corps[i].x = z[4*i]
+            self.corps[i].vx = z[4*i+1]
+            self.corps[i].y = z[4*i+2]
+            self.corps[i].vy = z[4*i+3]
 
     def positions (self) :
         """Renvoie la liste des positions des corps du système"""

@@ -9,17 +9,17 @@ Fichier en charge de l'affichage et de l'animation du système
 import numpy
 import matplotlib.pyplot as pyplot
 
+periode_affichage = 0.05 # inverse du nombre d'images par seconde
 
 #obtention des paramètres de l'animation et du système
 parametres = numpy.genfromtxt('parametres.txt')
-temps_relat = parametres[parametres.shape[0]-3]
-periode_affichage = parametres[parametres.shape[0]-2]
+temps_relat = parametres[parametres.shape[0]-2]
 calc_par_frame = int(parametres[parametres.shape[0]-1])
 
 
 #création de la figure qui sera affichée
 fig = pyplot.figure()
-ax = fig.add_subplot(111, aspect = 'equal', autoscale_on = False, xlim=[-1.5,1.5], ylim=[-1.5,1.5])
+ax = fig.add_subplot(111, aspect = 'equal', autoscale_on = False, xlim=[-1.5e11,1.5e11], ylim=[-1.5e11,1.5e11])
 
 
 #création d'un système vide qui sera modifié au cours de l'animation. En fait on crée ici notre "univers visuel"
@@ -53,7 +53,7 @@ def animer(i, systeme, dt):
 
     univers.set_data(*systeme.positions()) #l'étoile spécifie à la méthode qu'on utilise un argument qui "a un nom"
     energie_texte.set_text('energie = %.3e J\n\n' % (systeme.E_T+systeme.E_V)) #j'ai pensé que 3 décimales suffisaient
-    temps_texte.set_text('temps : %.3f s  effectif : %.3f s' % (systeme.duree_sys, systeme.duree_reel))
+    temps_texte.set_text('temps : %.3f s  effectif : %.2f s' % (systeme.duree_sys, systeme.duree_reel))
 
     return univers, energie_texte, temps_texte
 

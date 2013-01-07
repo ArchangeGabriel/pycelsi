@@ -7,12 +7,8 @@
 
 
 #coefficient d'écoulement du temps par rapport au temps réel
-0.1
-
-
-#en s, période d'affichage d'une nouvelle image
-0.025
+105192
 
 
 #nombre de calculs par image
-5
+100
