@@ -5,30 +5,33 @@
 Fichier de classe du système de corps
 """
 
+# On importe le fichier corps.py qui contient la classe Corps et les méthodes qui s'y appliquent
 from corps import *
 
+# On importe la fonction odeint de scipy pour l'intégration numérique de dy/dt=f(y,t)
 from scipy.integrate import odeint
 
+# On définit la classe Systeme des système de corps
 class Systeme (object) :
     """Classe de représentation d'un système de corps"""
 
     def __init__ (self, l, G = 6.67384e-11) :
         """Instanciation d'un système à partir d'une liste de corps et de G"""
 
-        self.G = G
+        self.G = G # Constante de gravitation
 
         self.corps = []
 
-        self.n = 0
+        self.n = 0 # Nombre de corps dans le système
 
-        self.E_T = 0
-        self.E_V = 0
+        self.E_T = 0 # Énergie cinétique totale du système, initialisée à 0
+        self.E_V = 0 # Énergie potentielle totale du système, initialisée à 0
 
-        self.duree_sys = 0
-        self.duree_reel = 0
+        self.duree_sys = 0 # Durée écoulée pour le système depuis le début de la simulation
+        self.duree_reel = 0 # Durée écoulée pour l'utilisateur depuis le début de la simulation
 
         for corps in l :
-            self.corps += [Corps(corps[0], corps[1], corps[2], corps[3], corps[4], corps[5], corps[6])]
+            self.corps += [Corps(corps[0], corps[1], corps[2], corps[3], corps[4], corps[5], corps[6], corps[7])]
             self.n += 1
 
     def __str__ (self) :
@@ -74,7 +77,6 @@ class Systeme (object) :
         z = odeint(self.vect_deriv, z, [0, dt])[1]
 
         for i in range(0, self.n) :
-            print z[4*i], z[4*i+1], z[4*i+2], z[4*i+3]
             self.corps[i].x = z[4*i]
             self.corps[i].vx = z[4*i+1]
             self.corps[i].y = z[4*i+2]

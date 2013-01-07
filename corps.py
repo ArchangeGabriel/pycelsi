@@ -15,10 +15,11 @@ class Corps (object) :
     Classe de représentation des objets célestes
     """
 
-    def __init__ (self, name, x, y, vx, vy, r, m) :
+    def __init__ (self, name, colour, x, y, vx, vy, r, m) :
         """Instanciation d'un corps"""
 
         self.name = name
+        self.colour = colour
         self.x = x
         self.y = y
         self.vx = vx
