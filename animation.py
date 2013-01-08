@@ -15,7 +15,7 @@ calc_par_frame = 100
 
 # Création de la figure qui sera affichée
 fig = pyplot.figure()
-ax = fig.add_subplot(111, aspect = 'equal', autoscale_on = False, xlim=[-1.5e11,1.5e11], ylim=[-1.5e11,1.5e11])
+ax = fig.add_subplot(111, autoscale_on = False, xlim=[-1.5e11,1.5e11], ylim=[-1.5e11,1.5e11])
 
 # Création d'un système vide qui sera modifié au cours de l'animation. En fait on crée ici notre "univers visuel"
 univers, = ax.plot([], [], 'bo', markersize=5)
