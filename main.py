@@ -31,5 +31,5 @@ assert periode_affichage > (t1 - t0), "Période d'affichage demandée %f s trop 
 
 
 # Animation de l'affichage
-anim = FuncAnimation (fig, animer, fargs=(systeme, dt), frames=1, interval=periode_affichage*1000, blit=True, init_func=initialisation)
+anim = FuncAnimation (fig, animer, fargs=(systeme, dt), interval=periode_affichage*1000, blit=True, init_func=initialisation)
 pyplot.show()

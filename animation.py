@@ -47,7 +47,7 @@ def animer(i, systeme, dt):
     systeme.duree_reel += periode_affichage
 
     univers.set_data(*systeme.positions()) # * spécifie à la méthode qu'on utilise un argument qui "a un nom"
-    energie_texte.set_text('energie = %.4e J\n\n' % (systeme.E_T+systeme.E_V)) # 5 Chiffres significatifs
-    temps_texte.set_text('temps : %.3f s  effectif : %.2f s' % (systeme.duree_sys, systeme.duree_reel))
+    energie_texte.set_text('Énergie = %.4e J\n\n' % (systeme.E_T+systeme.E_V)) # 5 Chiffres significatifs
+    temps_texte.set_text('Temps : %.3f s  Effectif : %.2f s' % (systeme.duree_sys, systeme.duree_reel))
 
     return univers, energie_texte, temps_texte
