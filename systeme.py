@@ -33,7 +33,7 @@ class Systeme (object) :
 
         self.start = [l, G]
 
-        #self.time = 0
+        self.time = 0
 
     def __str__ (self) :
         """Surcharge de l'opérateur str() pour la classe Système"""

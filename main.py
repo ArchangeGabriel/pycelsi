@@ -36,7 +36,7 @@ assert periode_affichage > (t1 - t0), "Période d'affichage demandée %f s trop 
 
 # On réinitialise le système
 systeme.reset()
-#systeme.time = time()
+systeme.time = time()
 
 # Animation de l'affichage
 # Cette première version est la "bonne", mais ne fonctionne pas car l'animation ne respecte pas interval...
