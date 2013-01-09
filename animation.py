@@ -6,12 +6,7 @@ Fichier en charge de l'affichage et de l'animation du système
 """
 
 import matplotlib.pyplot as pyplot
-
-periode_affichage = 0.05 # Inverse du nombre d'images par seconde
-
-# Obtention des paramètres de l'animation et du système - A déplacer dans la lecture du fichier de conf
-temps_relat = 105192
-calc_par_frame = 100
+from time import time
 
 # Création de la figure qui sera affichée
 fig = pyplot.figure()
@@ -34,20 +29,30 @@ def initialisation():
     
     return univers, energie_texte, temps_texte
 
-
-def animer(i, systeme, dt):
+def animer(i, systeme, calc_per_frame, periode_affichage, temps_relat, dt):
     """
     Génère l'animation de la frame i en actualisant les positions et l'énergie de la frame i-1 et en envoyant le résultat dans l'"univers visuel"
     """
 
-    for calc in range (0,calc_par_frame) :
-        systeme.iteration(dt)
-        systeme.duree_sys += dt
+    t0 = time()
 
-    systeme.duree_reel += periode_affichage
+    for calc in range (0,calc_per_frame) :
+        systeme.iteration(dt)
+
+    duree_reel = periode_affichage * i
+    duree_sys = duree_reel * temps_relat
+
+    t1 = time()
 
     univers.set_data(*systeme.positions()) # * spécifie à la méthode qu'on utilise un argument qui "a un nom"
-    energie_texte.set_text('Énergie = %.4e J\n\n' % (systeme.E_T+systeme.E_V)) # 5 Chiffres significatifs
-    temps_texte.set_text('Temps : %.3f s  Effectif : %.2f s' % (systeme.duree_sys, systeme.duree_reel))
+    energie_texte.set_text("Energie = %.4e J\n\n" % (systeme.E_T+systeme.E_V)) # 5 Chiffres significatifs
+    temps_texte.set_text("Temps : %.3f s  Effectif : %.2f s" % (duree_sys, duree_reel))
+
+    # Pour ralentir l'exécution mais c'est crade, et ça dépend de la machine
+    #while t1 - t0 < 0.041 :
+    #    t1 = time()
+
+    # Ecart entre le temps réellement écoulé et duree_reel
+    print t1 - systeme.time - duree_reel
 
     return univers, energie_texte, temps_texte

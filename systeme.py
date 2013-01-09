@@ -27,15 +27,28 @@ class Systeme (object) :
         self.E_T = 0 # Énergie cinétique totale du système, initialisée à 0
         self.E_V = 0 # Énergie potentielle totale du système, initialisée à 0
 
-        self.duree_sys = 0 # Durée écoulée pour le système depuis le début de la simulation
-        self.duree_reel = 0 # Durée écoulée pour l'utilisateur depuis le début de la simulation
-
         for corps in l :
             self.corps += [Corps(corps[0], corps[1], corps[2], corps[3], corps[4], corps[5], corps[6], corps[7])]
             self.n += 1
 
+        self.start = [l, G]
+
+        #self.time = 0
+
     def __str__ (self) :
         """Surcharge de l'opérateur str() pour la classe Système"""
+
+        chaine = "Ce système est composé des corps :\n"
+
+        for corps in self.corps :
+            chaine += str(corps) + "\n"
+
+        return chaine
+
+    def reset (self) :
+        """ Réinitialisation du système"""
+
+        self.__init__(self.start[0], self.start[1])
 
     def vect_deriv (self, z, t) :
         """Vecteur des relations dérivées sur x, vx, y, vy"""
