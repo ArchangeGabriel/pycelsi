@@ -34,10 +34,14 @@ def animer(i, systeme, calc_per_frame, periode_affichage, temps_relat, dt, wait)
     Génère l'animation de la frame i en actualisant les positions et l'énergie de la frame i-1 et en envoyant le résultat dans l'"univers visuel"
     """
 
-    t2 = time()
+    t0 = time()
 
-    for calc in range (0,calc_per_frame) :
-        systeme.iteration(dt)
+    # Version rapide
+    for j in range(calc_per_frame):
+        systeme.iteration(dt, 1)
+
+    # Version propre, mais plus lente et conserve mal l'énergie
+    #systeme.iteration(dt, calc_per_frame)
 
     duree_reel = periode_affichage * i
     duree_sys = duree_reel * temps_relat
@@ -46,15 +50,15 @@ def animer(i, systeme, calc_per_frame, periode_affichage, temps_relat, dt, wait)
     energie_texte.set_text("Energie = %.4e J\n\n" % (systeme.E_T+systeme.E_V)) # 5 Chiffres significatifs
     temps_texte.set_text("Temps : %.3f s  Effectif : %.2f s" % (duree_sys, duree_reel))
 
-    t3 = time()
+    t1 = time()
 
-    t = wait-t3+t2
+    t = wait-t1+t0
 
     # Pour ralentir l'exécution, mais ça dépend de la machine
     if t>0:
         sleep(t)
 
     # Ecart entre le temps réellement écoulé et duree_reel
-    print t3 - systeme.time - duree_reel
+    print t1 - systeme.time - duree_reel
 
     return univers, energie_texte, temps_texte
