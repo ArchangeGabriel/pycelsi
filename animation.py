@@ -6,7 +6,7 @@ Fichier en charge de l'affichage et de l'animation du système
 """
 
 import matplotlib.pyplot as pyplot
-from time import time
+from time import time, sleep
 
 # Création de la figure qui sera affichée
 fig = pyplot.figure()
@@ -29,12 +29,12 @@ def initialisation():
     
     return univers, energie_texte, temps_texte
 
-def animer(i, systeme, calc_per_frame, periode_affichage, temps_relat, dt):
+def animer(i, systeme, calc_per_frame, periode_affichage, temps_relat, dt, wait):
     """
     Génère l'animation de la frame i en actualisant les positions et l'énergie de la frame i-1 et en envoyant le résultat dans l'"univers visuel"
     """
 
-    t0 = time()
+    t2 = time()
 
     for calc in range (0,calc_per_frame) :
         systeme.iteration(dt)
@@ -42,17 +42,19 @@ def animer(i, systeme, calc_per_frame, periode_affichage, temps_relat, dt):
     duree_reel = periode_affichage * i
     duree_sys = duree_reel * temps_relat
 
-    t1 = time()
-
     univers.set_data(*systeme.positions()) # * spécifie à la méthode qu'on utilise un argument qui "a un nom"
     energie_texte.set_text("Energie = %.4e J\n\n" % (systeme.E_T+systeme.E_V)) # 5 Chiffres significatifs
     temps_texte.set_text("Temps : %.3f s  Effectif : %.2f s" % (duree_sys, duree_reel))
 
-    # Pour ralentir l'exécution mais c'est crade, et ça dépend de la machine
-    #while t1 - t0 < 0.041 :
-    #    t1 = time()
+    t3 = time()
+
+    t = wait-t3+t2
+
+    # Pour ralentir l'exécution, mais ça dépend de la machine
+    if t>0:
+        sleep(t)
 
     # Ecart entre le temps réellement écoulé et duree_reel
-    print t1 - systeme.time - duree_reel
+    print t3 - systeme.time - duree_reel
 
     return univers, energie_texte, temps_texte
