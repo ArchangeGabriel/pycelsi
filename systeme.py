@@ -31,9 +31,8 @@ class Systeme (object) :
             self.corps += [Corps(corps[0], corps[1], corps[2], corps[3], corps[4], corps[5], corps[6], corps[7])]
             self.n += 1
 
+        # On stocke l'appel initial pour pouvoir réinitialiser le système en cas de besoin
         self.start = [l, G]
-
-        self.time = 0
 
     def __str__ (self) :
         """Surcharge de l'opérateur str() pour la classe Système"""
@@ -56,26 +55,26 @@ class Systeme (object) :
         dz = list()
 
         for i in range(0, self.n) :
-            dz.append(z[4*i+1])
+            dz.append(z[4*i+1]) # dx/dt = vx
             dz.append(0)
-            dz.append(z[4*i+3])
+            dz.append(z[4*i+3]) # dy/dt = vy
             dz.append(0)
 
         self.E_T = 0
         self.E_V = 0
 
         for corps in self.corps :
-            self.E_T += corps.energie_ki()
+            self.E_T += corps.energie_ki() # E_T = E_T(1) + ... + E_T(n)
 
         for i in range(0, self.n - 1) :
             for j in range (i + 1, self.n) :
                 Vf = self.corps[i].potentiel_force(self.corps[j], self.G)
-                self.E_V -= Vf[0]
+                self.E_V -= Vf[0] # E_V = E_V(1) + ... + E_V(n)
                 f = Vf[1]
-                dz[4*i+1] += f[0] / self.corps[i].m
-                dz[4*i+3] += f[1] / self.corps[i].m
-                dz[4*j+1] -= f[0] / self.corps[j].m
-                dz[4*j+3] -= f[1] / self.corps[j].m
+                dz[4*i+1] += f[0] / self.corps[i].m # d(vx1)/dt += Fx(2->1)
+                dz[4*i+3] += f[1] / self.corps[i].m # d(vy1)/dt += Fy(2->1)
+                dz[4*j+1] -= f[0] / self.corps[j].m # d(vx2)/dt += Fx(1->2) = -Fx(2->1)
+                dz[4*j+3] -= f[1] / self.corps[j].m # d(vy2)/dt += Fy(1->2) = -Fy(2->1)
 
         return dz
 
@@ -89,8 +88,9 @@ class Systeme (object) :
 
         vect_t = [ i*dt for i in range(n+1) ]
 
-        z = odeint(self.vect_deriv, z, vect_t)
+        z = odeint(self.vect_deriv, z, vect_t) # Intègre le système aux instants de vect_t
 
+        # On réinjecte le résultat dans les corps
         for i in range(self.n) :
             self.corps[i].x = z[n][4*i]
             self.corps[i].vx = z[n][4*i+1]
