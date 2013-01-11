@@ -30,7 +30,7 @@ class Corps (object) :
     def __str__ (self) :
         """Surcharge de l'opérateur str() pour la classe Corps"""
 
-        chaine_name = "Corps : %s" % self.name
+        chaine_name = "%s" % self.name
         chaine_x = "x : " + str(self.x)
         chaine_y = "y : " + str(self.y)
         chaine_vx = "vx : " + str(self.vx) + " m.s⁻¹"
