@@ -29,7 +29,7 @@ def initialisation():
     
     return univers, energie_texte, temps_texte
 
-def animer(i, systeme, calc_per_frame, periode_affichage, temps_relat, dt, wait):
+def animer(i, systeme, T, calc_per_frame, periode_affichage, temps_relat, dt, wait):
     """
     Génère l'animation de la frame i en actualisant les positions et l'énergie de la frame i-1 et en envoyant le résultat dans l'"univers visuel"
     """
@@ -59,6 +59,6 @@ def animer(i, systeme, calc_per_frame, periode_affichage, temps_relat, dt, wait)
         sleep(t)
 
     # Ecart entre le temps réellement écoulé et duree_reel
-    print t1 - systeme.time - duree_reel
+    print t1 - T - duree_reel
 
     return univers, energie_texte, temps_texte
