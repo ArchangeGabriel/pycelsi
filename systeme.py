@@ -97,6 +97,25 @@ class Systeme (object) :
             self.corps[i].y = z[n][4*i+2]
             self.corps[i].vy = z[n][4*i+3]
 
+    def iteration2 (self, dt, n) :
+        """Iteration de l'état du système"""
+
+        z = []
+
+        for corps in self.corps :
+            z += [corps.x, corps.vx, corps.y, corps.vy]
+
+        # On intègre n fois le système en le réinjectant dans lui-même
+        for i in range(n) :
+            z = odeint(self.vect_deriv, z, [0, dt])[1]
+
+        # On réinjecte le résultat dans les corps
+        for i in range(self.n) :
+            self.corps[i].x = z[4*i]
+            self.corps[i].vx = z[4*i+1]
+            self.corps[i].y = z[4*i+2]
+            self.corps[i].vy = z[4*i+3]
+
     def positions (self) :
         """Renvoie la liste des positions des corps du système"""
 
