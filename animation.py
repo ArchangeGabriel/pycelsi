@@ -31,7 +31,7 @@ def initialisation():
 
 def animer(i, systeme, T, calc_per_frame, periode_affichage, temps_relat, dt, wait):
     """
-    Génère l'animation de la frame i en actualisant les positions et l'énergie de la frame i-1 et en envoyant le résultat dans l'"univers visuel"
+    Génère l'image i à partir du système itéré.
     """
 
     t0 = time()
