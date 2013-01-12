@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-__version__ = "Time-stamp: <2013-01-12 17:30:19 bpagani>"
+__version__ = "Time-stamp: <2013-01-13 00:30:58 bpagani>"
 __author__ = "Bruno Pagani <bruno.n.pagani@gmail.com>"
 
 """
@@ -94,9 +94,16 @@ if __name__=='__main__':
     # Création du système - Version temporaire pour les tests, prochainement lecture depuis un fichier
     systeme = Systeme([['Soleil','jaune',0,0,0,0,1.392684e9/2,1.9891e30],['Terre','bleu',1.495978875e11,0,0,29783,6.3710e6,5.9736e24]])
 
-    
+    # On détermine la taille de la figure représentant le système
+    size = 0
+    for corps in systeme.corps :
+        k = max(corps.x,corps.y) 
+        if k > size :
+            size = k
+    size = size * 1.05 # Ajout de 5% pour ne pas avoir de points sur les bords
+
     # On importe la fonction d'animation
     from animation import animation
     # Et c'est parti pour le show !
     animation (systeme, periode_affichage, temps_relatif, wait, 
-               calc_per_frame, method, temps_sys)
+               calc_per_frame, method, temps_sys, size)

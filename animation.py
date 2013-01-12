@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-__version__ = "Time-stamp: <2013-01-12 17:30:00 bpagani>"
+__version__ = "Time-stamp: <2013-01-13 00:30:49 bpagani>"
 __author__ = "Bruno Pagani <bruno.n.pagani@gmail.com>, \
               Denis Ibanez <denis.ibanez@ens-lyon.fr>"
 
@@ -15,13 +15,21 @@ from time import time, sleep
 
 # Création de la figure qui sera affichée
 fig = pyplot.figure()
-ax = fig.add_subplot(111, xlim=[-1.5e11,1.5e11], ylim=[-1.5e11,1.5e11])
+ax = fig.add_subplot(111)
 
 # Création d'un système vide qui sera modifié au cours de l'animation. En 
 # fait, on crée ici notre "univers visuel".
 univers, = ax.plot([], [], 'bo', markersize=5)
 energie_texte = ax.text(0.02, 0.90, '', transform=ax.transAxes)
 temps_texte = ax.text(0.02, 0.90, '', transform=ax.transAxes)
+
+
+def set_size (size) :
+    """
+    Ajustement de la taille du graphe.
+    """
+    ax.set_xlim(-size,size)
+    ax.set_ylim(-size,size)
 
 
 def initialisation () :
@@ -73,10 +81,12 @@ def animer (i, systeme, periode_affichage, temps_relatif, T,
 
 
 def generation_affichage (systeme, periode_affichage, temps_relatif, wait, 
-                          calc_per_frame, method, temps_sys) :
+                          calc_per_frame, method, temps_sys, size) :
     """
     Fonction qui génère le contenu à animer.
     """
+
+    set_size(size)
 
     # On calcule le pas de temps
     dt = periode_affichage * temps_relatif / calc_per_frame
@@ -114,8 +124,8 @@ def generation_affichage (systeme, periode_affichage, temps_relatif, wait,
         # calcul n'est pas trop long dans le cas où c'est lui qui limite.
         if not wait :
             t0 = time()
-            animer(0, periode_affichage, temps_relatif, T, 
-                   wait, systeme, calc_per_frame, dt, method)
+            animer(0, systeme, periode_affichage, temps_relatif, 
+                   time(), wait, calc_per_frame, dt, method)
             t1 = time()
 
             assert periode_affichage > (t1 - t0), ("Période d'affichage demandée\
@@ -132,12 +142,12 @@ def generation_affichage (systeme, periode_affichage, temps_relatif, wait,
 
 
 def animation (systeme, periode_affichage, temps_relatif, wait, 
-               calc_per_frame, method, temps_sys) :
+               calc_per_frame, method, temps_sys, size) :
     """
     Fonction affichant l'animation.
     """
 
     anim = generation_affichage(systeme, periode_affichage, temps_relatif, wait, 
-                                calc_per_frame, method, temps_sys)
+                                calc_per_frame, method, temps_sys, size)
 
     pyplot.show()
