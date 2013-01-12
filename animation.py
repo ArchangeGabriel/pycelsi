@@ -29,7 +29,7 @@ def initialisation():
     
     return univers, energie_texte, temps_texte
 
-def animer(i, systeme, T, calc_per_frame, periode_affichage, temps_relat, dt, wait):
+def animer(i, systeme, T, calc_per_frame, periode_affichage, temps_relatif, dt, wait):
     """
     Génère l'image i à partir du système itéré.
     """
@@ -44,7 +44,7 @@ def animer(i, systeme, T, calc_per_frame, periode_affichage, temps_relat, dt, wa
     #systeme.iteration(dt, calc_per_frame)
 
     duree_reel = periode_affichage * i
-    duree_sys = duree_reel * temps_relat
+    duree_sys = duree_reel * temps_relatif
 
     univers.set_data(*systeme.positions()) # * spécifie à la méthode qu'on utilise un argument qui "a un nom"
     energie_texte.set_text("Energie = %.4e J\n\n" % (systeme.E_T+systeme.E_V)) # 5 Chiffres significatifs
