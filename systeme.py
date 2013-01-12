@@ -5,10 +5,10 @@
 Fichier de classe du système de corps
 """
 
-# On importe le fichier corps.py qui contient la classe Corps et les méthodes qui s'y appliquent
+# On importe le fichier de la classe Corps
 from corps import *
 
-# On importe la fonction odeint de scipy pour l'intégration numérique de dy/dt=f(y,t)
+# On importe la fonction odeint de scipy pour l'intégration numérique
 from scipy.integrate import odeint
 
 # On définit la classe Systeme des système de corps
@@ -28,11 +28,13 @@ class Systeme (object) :
         self.E_V = 0 # Énergie potentielle totale du système, initialisée à 0
 
         for corps in l :
-            self.corps += [Corps(corps[0], corps[1], corps[2], corps[3], corps[4], corps[5], corps[6], corps[7])]
+            self.corps += [Corps(corps[0], corps[1], corps[2], corps[3], 
+                           corps[4], corps[5], corps[6], corps[7])]
             self.n += 1
 
-        # On stocke l'appel initial pour pouvoir réinitialiser le système en cas de besoin
+        # Données d'initialisation pour pouvoir réinitialiser le système
         self.start = [l, G]
+
 
     def __str__ (self) :
         """Surcharge de l'opérateur str() pour la classe Système"""
@@ -44,10 +46,12 @@ class Systeme (object) :
 
         return chaine
 
+
     def reset (self) :
         """ Réinitialisation du système"""
 
         self.__init__(self.start[0], self.start[1])
+
 
     def vect_deriv (self, z, t) :
         """Vecteur des relations dérivées sur x, vx, y, vy"""
@@ -78,6 +82,7 @@ class Systeme (object) :
 
         return dz
 
+
     def iteration (self, dt, n) :
         """Iteration de l'état du système"""
 
@@ -88,7 +93,8 @@ class Systeme (object) :
 
         vect_t = [ i*dt for i in range(n+1) ]
 
-        z = odeint(self.vect_deriv, z, vect_t) # Intègre le système aux instants de vect_t
+        # Intègration du système aux instants de vect_t
+        z = odeint(self.vect_deriv, z, vect_t)
 
         # On réinjecte le résultat dans les corps
         for i in range(self.n) :
@@ -96,6 +102,7 @@ class Systeme (object) :
             self.corps[i].vx = z[n][4*i+1]
             self.corps[i].y = z[n][4*i+2]
             self.corps[i].vy = z[n][4*i+3]
+
 
     def iteration2 (self, dt, n) :
         """Iteration de l'état du système"""
@@ -105,7 +112,7 @@ class Systeme (object) :
         for corps in self.corps :
             z += [corps.x, corps.vx, corps.y, corps.vy]
 
-        # On intègre n fois le système en le réinjectant dans lui-même
+        # On intègre n fois le système de dt en le réinjectant dans lui-même
         for i in range(n) :
             z = odeint(self.vect_deriv, z, [0, dt])[1]
 
@@ -115,6 +122,7 @@ class Systeme (object) :
             self.corps[i].vx = z[4*i+1]
             self.corps[i].y = z[4*i+2]
             self.corps[i].vy = z[4*i+3]
+
 
     def positions (self) :
         """Renvoie la liste des positions des corps du système"""
@@ -126,3 +134,51 @@ class Systeme (object) :
             z[1] += [corps.y]
 
         return z
+
+
+    def iter1 (self, dt, calc_per_frame, n) :
+        """
+        Itération complète du système - Version lente. Conserve bien l'énergie, 
+        d'autant plus que le nombre de calculs par image est élevé. Pour un 
+        calcul par image, même perte que la méthode propre, ce qui est logique 
+        étant donné que cela revient strictement au même.
+        """
+        sys = []
+
+        for i in range(n) :
+            for j in range(calc_per_frame):
+                self.iteration(dt, 1)
+            sys.append(self.positions()+[self.E_T+self.E_V])
+
+        return sys
+
+
+    def iter2 (self, dt, calc_per_frame, n) :
+        """
+        Itération complète du système - Version intermédiaire. Devrait 
+        fonctionner exactement comme iter1 mais en plus rapide, seulement semble
+        fonctionner comme iter3.
+        """
+        sys = []
+
+        for i in range(n) :
+            self.iteration2(dt, calc_per_frame)
+            sys.append(self.positions()+[self.E_T+self.E_V])
+
+        return sys
+
+
+    def iter3 (self, dt, calc_per_frame, n) :
+        """
+        Itération complère du système - Version propre. Beaucoup plus rapide, 
+        mais conserve mal l'énergie. D'ailleurs, il semblerait que la perte 
+        d'énergie ne dépende pas du nombre de calculs par image.
+        """
+
+        sys = []
+
+        for i in range(n) :
+            self.iteration(dt, calc_per_frame)
+            sys.append(self.positions()+[self.E_T+self.E_V])
+
+        return sys
