@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+__version__ = "Time-stamp: <2013-01-12 17:11:07 bpagani>"
+__author__ = "Bruno Pagani <bruno.n.pagani@gmail.com>"
+
 """
 Fichier de classe des objets célestes
 """

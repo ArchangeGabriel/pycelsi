@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+__version__ = "Time-stamp: <2013-01-12 17:10:33 bpagani>"
+__author__ = "Bruno Pagani <bruno.n.pagani@gmail.com>"
+
 """
 Fichier de classe du système de corps
 """
@@ -77,8 +80,8 @@ class Systeme (object) :
                 f = Vf[1]
                 dz[4*i+1] += f[0] / self.corps[i].m # d(vx1)/dt += Fx(2->1)
                 dz[4*i+3] += f[1] / self.corps[i].m # d(vy1)/dt += Fy(2->1)
-                dz[4*j+1] -= f[0] / self.corps[j].m # d(vx2)/dt += Fx(1->2) = -Fx(2->1)
-                dz[4*j+3] -= f[1] / self.corps[j].m # d(vy2)/dt += Fy(1->2) = -Fy(2->1)
+                dz[4*j+1] -= f[0] / self.corps[j].m # d(vx2)/dt += -Fx(2->1)
+                dz[4*j+3] -= f[1] / self.corps[j].m # d(vy2)/dt += -Fy(2->1)
 
         return dz
 
@@ -180,5 +183,22 @@ class Systeme (object) :
         for i in range(n) :
             self.iteration(dt, calc_per_frame)
             sys.append(self.positions()+[self.E_T+self.E_V])
+
+        return sys
+
+
+    def itern (self, dt, calc_per_frame, n, method=0) :
+        """
+        Méta-fonction qui appelle la méthode [method] d'itération.
+        """
+
+        if not method :
+            sys = self.iter1(dt, calc_per_frame, n)
+        elif method == 1 :
+            sys = self.iter2(dt, calc_per_frame, n)
+        elif method == 2 :
+            sys = self.iter2(dt, calc_per_frame, n)
+        else :
+            raise ValueError("method = %d <> 0, 1 ou 2" % method)
 
         return sys
