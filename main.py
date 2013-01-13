@@ -69,6 +69,8 @@ if __name__=='__main__':
     parser.add_option("-T", "--temps_sys", type=float, default=0.,
                       help=u"Pour faire tourner le système pendant temps_sys \
                             (temps système) et procéder à l'affichage ensuite.")
+    parser.add_option("-x", "--size", type=float, default=0.,
+                      help=u"Fenêtre d'affichage, en m [auto].")
 
     # Déchiffrage des options et arguments
     opts,args = parser.parse_args()
@@ -114,15 +116,22 @@ if __name__=='__main__':
                           à %.2f fois le coefficient de dilation du temps." 
                           % periode_affichage)
 
+    size = opts.size
+    if size < 0 :
+        parser.error(u"La taille de la figure doit être strictement positive")
+    # Note : strictement, car si size = 0, on ajuste automatiquement.
+    # Donc si l'utilisateur a rentré quelque chose, il cherche à avoir une 
+    # taille précise, et par conséquent size différent de 0.
+
     systeme = Systeme(parse(sysfile))
 
-    # On détermine la taille de la figure représentant le système
-    size = 0
-    for corps in systeme.corps :
-        k = max(corps.x,corps.y) 
-        if k > size :
-            size = k
-    size = size * 1.05 # Ajout de 5% pour ne pas avoir de points sur les bords
+    if not size :
+        # On détermine la taille de la figure représentant le système
+        for corps in systeme.corps :
+            k = max(corps.x,corps.y) 
+            if k > size :
+                size = k
+        size = size * 1.05 # Ajout de 5% pour ne pas avoir de points sur les bords
 
     # On importe la fonction d'animation
     from animation import animation
