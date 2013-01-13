@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-__version__ = "Time-stamp: <2013-01-13 00:30:49 bpagani>"
+__version__ = "Time-stamp: <2013-01-13 13:45:23 bpagani>"
 __author__ = "Bruno Pagani <bruno.n.pagani@gmail.com>, \
               Denis Ibanez <denis.ibanez@ens-lyon.fr>"
 
 """
-Fichier en charge de l'affichage et de l'animation du système
+Fichier en charge de l'affichage et de l'animation du système.
 """
 
 import matplotlib.pyplot as pyplot
@@ -86,6 +86,7 @@ def generation_affichage (systeme, periode_affichage, temps_relatif, wait,
     Fonction qui génère le contenu à animer.
     """
 
+    # On définit la taille de la figure à afficher
     set_size(size)
 
     # On calcule le pas de temps

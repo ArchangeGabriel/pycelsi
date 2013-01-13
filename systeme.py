@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-__version__ = "Time-stamp: <2013-01-12 17:10:33 bpagani>"
+__version__ = "Time-stamp: <2013-01-13 13:52:00 bpagani>"
 __author__ = "Bruno Pagani <bruno.n.pagani@gmail.com>"
 
 """
-Fichier de classe du système de corps
+Fichier de classe du système de corps.
 """
 
 # On importe le fichier de la classe Corps
@@ -16,12 +16,14 @@ from scipy.integrate import odeint
 
 # On définit la classe Systeme des système de corps
 class Systeme (object) :
-    """Classe de représentation d'un système de corps"""
+    """
+    Classe de représentation d'un système de corps.
+    """
 
-    def __init__ (self, l, G = 6.67384e-11) :
-        """Instanciation d'un système à partir d'une liste de corps et de G"""
-
-        self.G = G # Constante de gravitation
+    def __init__ (self, l) :
+        """
+        Instanciation d'un système à partir d'une liste de corps.
+        """
 
         self.corps = []
 
@@ -36,13 +38,15 @@ class Systeme (object) :
             self.n += 1
 
         # Données d'initialisation pour pouvoir réinitialiser le système
-        self.start = [l, G]
+        self.start = l
 
 
     def __str__ (self) :
-        """Surcharge de l'opérateur str() pour la classe Système"""
+        """
+        Surcharge de l'opérateur str() pour la classe Systeme.
+        """
 
-        chaine = "Ce système est composé des corps :\n"
+        chaine = ""
 
         for corps in self.corps :
             chaine += str(corps) + "\n"
@@ -51,13 +55,27 @@ class Systeme (object) :
 
 
     def reset (self) :
-        """ Réinitialisation du système"""
+        """
+        Réinitialisation du système.
+        """
 
-        self.__init__(self.start[0], self.start[1])
+        self.__init__(self.start)
+
+
+    def write (self, filename) :
+        """
+        Ecriture du système dans un fichier.
+        """
+
+        outfile = open(filename, 'w')
+        outfile.write(str(self))
+        outfile.close()
 
 
     def vect_deriv (self, z, t) :
-        """Vecteur des relations dérivées sur x, vx, y, vy"""
+        """
+        Vecteur des relations dérivées sur x, vx, y, vy.
+        """
 
         dz = list()
 
@@ -75,8 +93,8 @@ class Systeme (object) :
 
         for i in range(0, self.n - 1) :
             for j in range (i + 1, self.n) :
-                Vf = self.corps[i].potentiel_force(self.corps[j], self.G)
-                self.E_V -= Vf[0] # E_V = E_V(1) + ... + E_V(n)
+                Vf = self.corps[i].potentiel_force(self.corps[j])
+                self.E_V += Vf[0] # E_V = E_V(1) + ... + E_V(n)
                 f = Vf[1]
                 dz[4*i+1] += f[0] / self.corps[i].m # d(vx1)/dt += Fx(2->1)
                 dz[4*i+3] += f[1] / self.corps[i].m # d(vy1)/dt += Fy(2->1)
@@ -87,7 +105,9 @@ class Systeme (object) :
 
 
     def iteration (self, dt, n) :
-        """Iteration de l'état du système"""
+        """
+        Iteration de l'état du système.
+        """
 
         z = []
 
@@ -108,7 +128,9 @@ class Systeme (object) :
 
 
     def iteration2 (self, dt, n) :
-        """Iteration de l'état du système"""
+        """
+        Iteration de l'état du système.
+        """
 
         z = []
 
@@ -128,7 +150,9 @@ class Systeme (object) :
 
 
     def positions (self) :
-        """Renvoie la liste des positions des corps du système"""
+        """
+        Renvoie la liste des positions des corps du système.
+        """
 
         z = [[],[]]
 

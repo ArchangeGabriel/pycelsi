@@ -1,0 +1,18 @@
+Corps : Soleil
+Couleur : jaune
+x : 0.0 m
+y : 0.0 m
+vx : 0.0 m.s⁻¹
+vy : 0.0 m.s⁻¹
+r : 696342000.0 m
+m : 1.9891e+30 kg
+
+Corps : Terre
+Couleur : bleu
+x : 1.495978875e+11 m
+y : 0.0 m
+vx : 0.0 m.s⁻¹
+vy : 29783.0 m.s⁻¹
+r : 6371000.0 m
+m : 5.9736e+24 kg
+
