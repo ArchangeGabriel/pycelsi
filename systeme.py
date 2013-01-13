@@ -197,7 +197,7 @@ class Systeme (object) :
 
     def iter3 (self, dt, calc_per_frame, n) :
         """
-        Itération complère du système - Version propre. Beaucoup plus rapide, 
+        Itération complète du système - Version propre. Beaucoup plus rapide, 
         mais conserve mal l'énergie. D'ailleurs, il semblerait que la perte 
         d'énergie ne dépende pas du nombre de calculs par image.
         """
