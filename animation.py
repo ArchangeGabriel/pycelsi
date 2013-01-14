@@ -15,7 +15,7 @@ from time import time, sleep
 
 # Création de la figure qui sera affichée
 fig = pyplot.figure()
-ax = fig.add_subplot(111)
+ax = fig.add_subplot(111, aspect="equal")
 
 # Création d'un système vide qui sera modifié au cours de l'animation. En 
 # fait, on crée ici notre "univers visuel".
