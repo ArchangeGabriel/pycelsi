@@ -221,7 +221,7 @@ class Systeme (object) :
         elif method == 1 :
             sys = self.iter2(dt, calc_per_frame, n)
         elif method == 2 :
-            sys = self.iter2(dt, calc_per_frame, n)
+            sys = self.iter3(dt, calc_per_frame, n)
         else :
             raise ValueError("method = %d <> 0, 1 ou 2" % method)
 
