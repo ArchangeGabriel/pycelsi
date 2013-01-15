@@ -1,12 +1,17 @@
 Années : [s]
-Mercure : 7600550.976
-Venus : 19414166.4
-Terre : 31558201.344
-Mars : 59353352.64
-Jupiter : 374574628.8
-Saturne : 929468433.6
-Uranus : 2661041808.0
-Neptune : 5203431671.04
+Mercure : 7600550.976 0.2408
+Venus : 19414166.4 0.6152
+Terre : 31558201.344 1.0000
+Mars : 59353352.64 1.8808
+Jupiter : 374574628.8 11.8693
+Saturne : 929468433.6 29.4525
+Uranus : 2661041808.0 84.3217
+Neptune : 5203431671.04 164.8837
+
+Après calculs avec la méthode 0 :
+Mercure : 7321864.107 0.2320 années
+Venus : 19365630.984 0.6135
+Terre : 30006589.778 0.9508
 
 Evolution du système Terre-Soleil, année terrestre équivalente à 5 min, temps synchronisé :
 ./main.py -s "sun+earth.txt" -t 105192 -c 100 -w 0.039
