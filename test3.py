@@ -4,14 +4,14 @@ y0_0 = 1
 y1_0 = 0
 z = [y0_0, y1_0]
 
-def func(z, t):
+def func(y, t):
 
-    t = z[:]
+    dz = y[:]
 
-    t[0] = z[1]
-    t[1] = -z[0]
+    dz[0] = y[1]
+    dz[1] = -y[0]
 
-    return t
+    return dz
 
 dt = 0.1
 
