@@ -1,3 +1,28 @@
+PyCelSi est un simulateur numérique de problème N-corps débuté dans le cadre d'un projet informatique de premier semestre en L3 Sciences de la Matière à l'ENS de Lyon.
+
+Ce projet, bien que plus développé dans ce cadre, continuera d'être développé sur mon temps libre tant il me passione.
+
+La manière principale de l'utiliser est de le lancer en ligne de commande, avec lecture d'un fichier de conf. Mais il est également possible d'importer les modules créés à l'occasion et de jouer avec dans une console Python/iPython.
+Beaucoup d'autres manières de l'utiliser verront le jour plus tard, au fur et à mesure du développement.
+
+Quelques exemples d'utilisation du script principal :
+
+ - évolution du système Terre-Soleil, année terrestre équivalente à 5 min, temps synchronisé (pour ma machine) :
+   ./main.py -s "sun+earth.txt" -t 105192 -c 100 -w 0.039
+
+ - pendant 1 an terrestre avec calculs précédant l'affichage :
+   ./main.py -s "sun+earth.txt" -t 105192 -c 100 -w 0.037 -T 31557600
+
+ - évolution du système solaire,  année terrestre équivalente à 5 min, fps max :
+   ./main.py -s "systeme_solaire.txt" -t 105192 -c 10 -w 0.001
+
+ - évolution du système solaire zommée sur Mercure, année mercurienne équivalente à 1 min, fps max :
+   ./main.py -s "systeme_solaire.txt" -t 126675.8496 -c 10 -w 0.001 -x 1e11
+
+Par rapport à cette dernière option, -x, sachez qu'il est possible via les boutons situés en bas de la fenêtre de zoomer, dézoomer, revenir à la vue initiale et de se déplacer.
+
+Quelques grandeurs utiles pour diverses simulation :
+
 Années : [s]
 Mercure : 7600550.976
 Venus : 19414166.4
@@ -8,19 +33,6 @@ Saturne : 929468433.6
 Uranus : 2661041808.0
 Neptune : 5203431671.04
 
-Evolution du système Terre-Soleil, année terrestre équivalente à 5 min, temps synchronisé :
-./main.py -s "sun+earth.txt" -t 105192 -c 100 -w 0.039
-
-Pendant 1 an terrestre avec calculs précédant l'affichage :
-./main.py -s "sun+earth.txt" -t 105192 -c 100 -w 0.037 -T 31557600
-
-Evolution du système solaire,  année terrestre équivalente à 5 min, fps max :
-./main.py -s "systeme_solaire.txt" -t 105192 -c 10 -w 0.001
-
-Evolution du système solaire zommée sur Mercure, année mercurienne équivalente à 1 min, fps max :
-./main.py -s "systeme_solaire.txt" -t 126675.8496 -c 10 -w 0.001 -x 1e11
-
-
 Quelques trucs qui seraient biens, à implémenter :
  - couleur des objets (les corps en ont une, mais rien dans l'affichage)
  - rayon des objets, avec par exemple le plus petit ayant un diamètre de 2px, et les autres proportionnels
@@ -28,4 +40,5 @@ Quelques trucs qui seraient biens, à implémenter :
  - possibilité d'écrire le système itéré un paquet de fois dans un fichier, pour pouvoir reprendre pour faire un replay par exemple
  - possibilité d'afficher le temps écoulé pour le système lorsqu'un corps a effectué une révolution, avec le nom de cleui-ci (détection y<0 vers y>0)
  - afficher le centre de masse
- - valeur moyenne des distances des corps au centre du système
+ - valeur moyenne des distances des corps au centre du système. Avec le point ci-dessus, c'est un paramètre de stabilité.
+ - moment du système
