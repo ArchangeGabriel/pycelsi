@@ -23,7 +23,7 @@ Par rapport à cette dernière option, -x, sachez qu'il est possible via les bou
 
 Quelques grandeurs utiles pour diverses simulation :
 
-Années : [s]
+Années : [s] [an T]
 Mercure : 7600550.976 0.2408
 Venus : 19414166.4 0.6152
 Terre : 31558201.344 1.0000
@@ -34,9 +34,15 @@ Uranus : 2661041808.0 84.3217
 Neptune : 5203431671.04 164.8837
 
 Après calculs avec la méthode 0 :
-Mercure : 7321864.107 0.2320 années
-Venus : 19365630.984 0.6135
-Terre : 30006589.778 0.9508
+Années : [s] [an Tr] [an Ts]
+Mercure : 7321864.107 0.2320 0.244
+Venus : 19365630.984 0.6135 0.645
+Terre : 30006589.778 0.9508 1
+Mars : 59353352.64 1.8808 1.98 (Mais à dt près)
+Jupiter : 373013901.180 11.82 12.4
+Saturne : 910104507.9 28.84 30.3
+Uranus : 2661041808.0 84.3 88.7 (Mais à dt près)
+Naptune : 5203431671.04 164 173 (Mais à dt près)
 
 Quelques trucs qui seraient biens, à implémenter :
  - couleur des objets (les corps en ont une, mais rien dans l'affichage)
