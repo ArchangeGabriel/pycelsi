@@ -9,7 +9,7 @@ def func(z, t):
     t = z[0]
 
     z[0] = z[1]
-    z[-1] = t
+    z[1] = t
 
     return z
 
