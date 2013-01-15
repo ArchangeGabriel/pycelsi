@@ -20,10 +20,12 @@ def parse (sysfile) :
     sys = []
     i = 0
     j = -1
+    k = 1
 
     for line in sysfile :
         # On ignore les lignes commentées ou vides
         if line.startswith(('#','\n',' ')) :
+            k += 1
             continue
         if (i % 8) == 0 :
             sys.append([])
@@ -31,12 +33,12 @@ def parse (sysfile) :
         try :
             x = line.split()[2]
         except IndexError :
-            raise ValueError("Fichier système incorrect, ligne '%s'." % line)
+            raise ValueError("Fichier système incorrect, ligne %d." % (i+k))
         if not (i % 8) in {0,1} :
             try :
                 x = float(x)
             except ValueError :
-                raise ValueError("Valeur non float, ligne '%s'." % line)
+                raise ValueError("Valeur non float, ligne '%d'." % (i+k))
         sys[j].append(x)
         i += 1
 
@@ -128,7 +130,7 @@ if __name__=='__main__':
     if not size :
         # On détermine la taille de la figure représentant le système
         for corps in systeme.corps :
-            k = max(corps.x,corps.y) 
+            k = max(abs(corps.x),abs(corps.y)) 
             if k > size :
                 size = k
         size = size * 1.05 # Ajout de 5% pour ne pas avoir de points sur les bords

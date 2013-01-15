@@ -28,3 +28,4 @@ Quelques trucs qui seraient biens, à implémenter :
  - possibilité d'écrire le système itéré un paquet de fois dans un fichier, pour pouvoir reprendre pour faire un replay par exemple
  - possibilité d'afficher le temps écoulé pour le système lorsqu'un corps a effectué une révolution, avec le nom de cleui-ci (détection y<0 vers y>0)
  - afficher le centre de masse
+ - valeur moyenne des distances des corps au centre du système

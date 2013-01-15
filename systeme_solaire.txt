@@ -9,72 +9,72 @@ m : 1.9891e30 kg
 
 Corps : Mercure
 Couleur : gris
-x : 6.9817079e10 m
+x : 5.7909176e10 m
 y : 0 m
 vx : 0 m.s⁻¹
-vy : 3.886e4 m.s⁻¹
+vy : 4.736e4 m.s⁻¹
 r : 2.4397e6 m
 m : 3.302e23 kg
 
 Corps : Venus
 Couleur : blanc
-x : 1.08942109e11 m
-y : 0 m
-vx : 0 m.s⁻¹
-vy : 3.479e4 m.s⁻¹
+x : 0 m
+y : 1.08208930e11 m
+vx : -3.502e4 m.s⁻¹
+vy : 0 m.s⁻¹
 r : 6.0518e6 m
 m : 4.8685e24 kg
 
 Corps : Terre
 Couleur : bleu
-x : 1.52097701e11 m
+x : -1.495978875e11 m
 y : 0 m
 vx : 0 m.s⁻¹
-vy : 29291 m.s⁻¹
+vy : -29291 m.s⁻¹
 r : 6.3710e6 m
 m : 5.9736e24 kg
 
 Corps : Mars
 Couleur : rouge
-x : 2.49228730e11 m
-y : 0 m
-vx : 0 m.s⁻¹
-vy : 21972 m.s⁻¹
+x : 0 m
+y : -2.27936637e11 m
+vx : 24077 m.s⁻¹
+vy : 0 m.s⁻¹
 r : 3.3895e6 m
 m : 6.4185e23 kg
 
 Corps : Jupiter
 Couleur : orange
-x : 8.16620000e11 m
+x : 7.78412027e11 m
 y : 0 m
 vx : 0 m.s⁻¹
-vy : 1.244e4 m.s⁻¹
+vy : 13057.2 m.s⁻¹
 r : 6.9911e7 m
 m : 1.8986e27 kg
 
 Corps : Saturne
 Couleur : jaune
-x : 1.503983449e12 m
-y : 0 m
-vx : 0 m.s⁻¹
-vy : 9137 m.s⁻¹
+x : 0 m
+y : 1.421179772e12 m
+vx : -9644.6 m.s⁻¹
+vy : 0 m.s⁻¹
 r : 5.8232e7 m
 m : 5.6846e26 kg
 
 Corps : Uranus
 Couleur : vert
-x : 3.004419704e12 m
+x : -2.876679082e12 m
 y : 0 m
 vx : 0 m.s⁻¹
-vy : 6486 m.s⁻¹
+vy : -6.81e3 m.s⁻¹
 r : 2.5364e7 m
 m : 8.6810e25 kg
 
 Corps : Neptune
 Couleur : bleu
-x : 4.553946490e12 m
-y : 0 m
-vx : 0 m.s⁻¹
-vy : 5385 m.s⁻¹
+x : 0 m
+y : -4.503443661e12 m
+vx : 5431.7 m.s⁻¹
+vy : 0 m.s⁻¹
 r : 2.4622e7 m
 m : 1.0243e26 kg
