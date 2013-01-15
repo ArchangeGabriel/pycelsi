@@ -16,9 +16,7 @@ def func(y, t):
 dt = 0.1
 
 z = odeint(func, z, [0, dt])
-
 print z
 
 z = odeint(func, z[1], [0, dt])
-
 print z
